@@ -1,0 +1,31 @@
+{
+  "name": "declutter",
+  "version": "1.0.0",
+  "description": "declutter is dev application make user declutter thier mind when working on projects",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"pnpm dev:server\" \"pnpm dev:client\"",
+    "dev:client": "cd apps/web && pnpm dev",
+    "dev:server": "cd apps/server && pnpm start:dev",
+    "build": "concurrently \"pnpm build:server\" \"pnpm build:client\"",
+    "build:client": "cd apps/web && pnpm build",
+    "build:server": "cd apps/server && pnpm build",
+    "prod": "concurrently \"pnpm prod:server\" \"pnpm prod:client\"",
+    "prod:client": "cd apps/web && pnpm build && pnpm start",
+    "prod:server": "cd apps/server && pnpm build && pnpm start:prod",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himasnhu-at/declutter.git"
+  },
+  "author": "himanshu <git: himasnhu-at>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/himasnhu-at/declutter/issues"
+  },
+  "homepage": "https://github.com/himasnhu-at/declutter#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

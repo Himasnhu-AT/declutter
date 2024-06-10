@@ -17,7 +17,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "db:seed": "node prisma/seed.js",
+    "db:reset": "node prisma/reset.js",
+    "db:dev": "npx prisma migrate reset --force && npx prisma migrate dev && npm run db:reset && npm run db:seed",
+    "prisma:dev:deploy": "npx prisma migrate dev deploy",
+    "db:container:rm": "docker compose rm postgres -s -f -v",
+    "db:container:up": "docker compose up postgres redis -d"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",

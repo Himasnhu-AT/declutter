@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id           Int            @id @default(autoincrement())
+  name         String
+  description  String
+  photo        String
+  Match        Match[]
+  PricingModel PricingModel[]
+}
+
+model Match {
+  id                  Int                 @id @default(autoincrement())
+  hostUserId          String
+  hostUserName        String
+  participantUserId   String
+  participantUserName String
+  status              ParticipationStatus @default(pending)
+  message             String?
+  gameId              Int?
+  winnerUserId        String?
+  Game                Game?               @relation(fields: [gameId], references: [id])
+  User                User?               @relation(fields: [winnerUserId], references: [id])
+}
+
+model PricingModel {
+  id       Int  @id @default(autoincrement())
+  betPrice Int
+  winPrice Int
+  gameId   Int
+  Game     Game @relation(fields: [gameId], references: [id])
+}
+
+model Transaction {
+  id        String            @id @unique
+  amount    Int
+  type      TransactionType
+  timestamp DateTime          @default(now())
+  walletId  String
+  userId    String?
+  status    TransactionStatus @default(pending)
+  User      User?             @relation(fields: [userId], references: [id])
+  Wallet    Wallet            @relation(fields: [walletId], references: [id])
+}
+
+model User {
+  id          String        @id @unique
+  phoneNo     String        @unique
+  upiId       String        @default("Not Set")
+  username    String
+  type        UserType      @default(player)
+  token       String
+  Match       Match[]
+  Transaction Transaction[]
+  Wallet      Wallet?
+}
+
+model Wallet {
+  id          String        @id @unique
+  balance     Float
+  userId      String        @unique
+  Transaction Transaction[]
+  User        User          @relation(fields: [userId], references: [id])
+}
+
+enum ParticipationStatus {
+  pending
+  completed
+  conflict
+  cancelled
+  cancellationRequested
+  ongoing
+}
+
+enum Status {
+  pending
+  approved
+  rejected
+}
+
+enum TransactionStatus {
+  pending
+  completed
+  failed
+}
+
+enum TransactionType {
+  credit
+  debit
+}
+
+enum UserType {
+  player
+  admin
+}

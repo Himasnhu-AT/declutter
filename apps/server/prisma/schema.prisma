@@ -8,12 +8,13 @@ datasource db {
 }
 
 model User {
-  id       String @id @unique @default(uuid())
-  name     String
-  email    String @unique
-  password String
-  token    String
-  api_key  String
+  id         String  @id @unique @default(uuid())
+  name       String
+  email      String  @unique
+  password   String
+  token      String
+  api_key    String?
+  isVerified Boolean @default(false)
 
   projects Project[]
 }

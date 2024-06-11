@@ -13,7 +13,6 @@ import handleErrors from 'src/handlers/handleErrors.global';
 import { JwtService } from '@nestjs/jwt';
 import sendEmail from 'src/handlers/email.global';
 import Redis from 'ioredis';
-import { emit } from 'process';
 import RetrieveInfoFromRequest from 'src/handlers/retriveInfoFromRequest.global';
 import * as bcrypt from 'bcrypt';
 import crypto from 'crypto';
